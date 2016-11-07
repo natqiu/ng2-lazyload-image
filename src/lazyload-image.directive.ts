@@ -29,6 +29,7 @@ export class LazyLoadImageDirective {
 
     ngAfterContentInit() {
         this.scrollSubscription = getScrollListener(this._scrollTarget)
+            .filter(() => !!this.lazyImage) // remove the event listener if the lazyImage is falsy.
             .filter(() => this.isVisible())
             .take(1)
             .switchMap(() => this.loadImage(this.lazyImage))
